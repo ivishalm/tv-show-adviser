@@ -1,34 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import s from "./style.module.css";
+import { TVShowAPI } from "./api/tv-show";
+import { BACKDROP_BASE_URL } from "./config";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentTvShow, setCurrentTvShow] = useState([]);
+
+  async function fetchPopularShows() {
+    let data = await TVShowAPI.fetchPopularShows();
+    console.log(data, "App");
+    setCurrentTvShow(data[0]);
+  }
+
+  useEffect(() => {
+    fetchPopularShows();
+  }, []);
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div
+      className={s.main_container}
+      style={{
+        background: currentTvShow
+          ? `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('${BACKDROP_BASE_URL}${currentTvShow.backdrop_path}') no-repeat center / cover`
+          : "black",
+      }}
+    >
+      <div className={s.header}>
+        <div className="row">
+          <div className="col-4">
+            <div>logo</div>
+            <div>subtitle</div>
+          </div>
+          <div className="col-md-12 col-lg-4">
+            <input className="w-100" type="text" />
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className={s.tv_show_detail}>Tv Show Details</div>
+      <div className={s.recommended_tv_shows}>Recommended Tv Show</div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
