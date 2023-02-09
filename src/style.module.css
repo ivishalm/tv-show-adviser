@@ -13,3 +13,25 @@
 .recommended_tv_shows {
   flex: 2;
 }
+
+.title {
+  font-weight: 400;
+  font-size: 35px;
+}
+
+.rating_container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.overview:hover {
+  overflow-y: auto;
+}
+.overview {
+  font-weight: 400;
+  font-size: 20px;
+  height: 120px;
+  overflow-y: hidden;
+  margin-top: 10px;
+}

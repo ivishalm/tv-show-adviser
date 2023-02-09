@@ -1,4 +1,6 @@
 :root {
-  color: white;
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+}
+body {
+  color: white !important;
 }
