@@ -23,7 +23,7 @@ export function SearchBar({ onSubmit }) {
         type="text"
         onChange={handleChange}
         value={value}
-        placeholder="Search Tv show you may like"
+        placeholder="Search tv show you may like"
       />
     </>
   );
