@@ -1,5 +1,5 @@
-import s from "../style.module.css";
-import { FiveStarRating } from "./FiveStarRating";
+import s from "../../style.module.css";
+import { FiveStarRating } from "../FiveStarRating/FiveStarRating";
 
 export function TVShowDetail({ tvShow }) {
   const rating = tvShow.vote_average / 2;
