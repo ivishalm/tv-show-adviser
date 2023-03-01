@@ -6,23 +6,39 @@ import { Logo } from "./components/Logo/Logo";
 import { TVShowDetail } from "./components/TVShowDetails/TVShowDetails";
 import logoImg from "./assets/images/logo.png";
 import { TVShowList } from "./components/TVShowList/TVShowList";
+import { SearchBar } from "./components/SearchBar/SearchBar";
 
 function App() {
   const [currentTvShow, setCurrentTvShow] = useState();
   const [recommendationList, setRecommendationList] = useState([]);
 
   async function fetchPopularShows() {
-    let data = await TVShowAPI.fetchPopularShows();
-    if (data.length) {
-      setCurrentTvShow(data[0]);
+    try {
+      let data = await TVShowAPI.fetchPopularShows();
+      if (data.length) {
+        setCurrentTvShow(data[0]);
+      }
+    } catch (error) {
+      alert("Something went wrong!!!");
     }
   }
 
   async function fetchRecommendationTvShows(tvShowId) {
-    const recommendationListResp = await TVShowAPI.fetchRecommendations(tvShowId);
-    if (recommendationListResp.length) {
-      setRecommendationList(recommendationListResp.slice(0, 10));
-    }
+    try {
+      const recommendationListResp = await TVShowAPI.fetchRecommendations(tvShowId);
+      if (recommendationListResp.length) {
+        setRecommendationList(recommendationListResp.slice(0, 10));
+      }
+    } catch (error) {}
+  }
+
+  async function fetchByTitle(title) {
+    try {
+      const searchResp = await TVShowAPI.searchTvShows(title);
+      if (searchResp.length) {
+        setCurrentTvShow(searchResp[0]);
+      }
+    } catch (error) {}
   }
 
   useEffect(() => {
@@ -54,7 +70,7 @@ function App() {
             <Logo logo={logoImg} title="Watowatch" subtitle="Find a show you may like" />
           </div>
           <div className="col-md-12 col-lg-4">
-            <input className="w-100" type="text" />
+            <SearchBar onSubmit={fetchByTitle} />
           </div>
         </div>
       </div>
